@@ -1,7 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-export const cd = async (currentDirectory, input) => {
+export const rm = async (currentDirectory, input) => {
+
     let mkDir='';
     
     if (input.trim().split(' ')[1].split('\\')[0].length!==2){
@@ -16,11 +17,9 @@ export const cd = async (currentDirectory, input) => {
         mkDir=addr;
     }
 
-    try {
-        await fs.access(mkDir);
-        return mkDir;
-    } catch (err) {
+    await fs.unlink(mkDir).then(() => {
+    }).catch(() => {
         console.log('Operation failed');
-        return currentDirectory;
-    }
+    });
+
 };
