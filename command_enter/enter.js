@@ -13,6 +13,7 @@ import { rn } from '../command_files/rn.js';
 import { cp } from '../command_files/cp.js';
 import { mv } from '../command_files/mv.js';
 import { rm } from '../command_files/rm.js';
+import { hash } from '../command_hash/hash.js';
 
 
 let currentDirectory = startDirectory();
@@ -90,8 +91,10 @@ export const enter = () => {
                 break;
             // case 'os':
             //   break;
-            // case 'hash':
-            //   break;
+            case 'hash':
+                await hash(currentDirectory, input);
+                //rl.prompt();
+                break;
             // case 'compress':
             //   break;
             // case 'decompress':
@@ -100,7 +103,7 @@ export const enter = () => {
                 rl.close();
                 break;
             default:
-                console.log('\nInvalid input');
+                console.log('Invalid input');
                 messageDirectory(currentDirectory);
                 rl.prompt();
         }
