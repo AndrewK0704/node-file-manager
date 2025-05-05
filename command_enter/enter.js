@@ -14,6 +14,8 @@ import { cp } from '../command_files/cp.js';
 import { mv } from '../command_files/mv.js';
 import { rm } from '../command_files/rm.js';
 import { hash } from '../command_hash/hash.js';
+import { compress } from '../command_compress_decompress/compress.js';
+import { decompress } from '../command_compress_decompress/decompress.js';
 
 
 let currentDirectory = startDirectory();
@@ -95,10 +97,16 @@ export const enter = () => {
                 await hash(currentDirectory, input);
                 //rl.prompt();
                 break;
-            // case 'compress':
-            //   break;
-            // case 'decompress':
-            //   break;
+            case 'compress':
+                await compress(currentDirectory, input);
+                messageDirectory(currentDirectory);
+                rl.prompt();
+                break;
+            case 'decompress':
+                await decompress(currentDirectory, input);
+                messageDirectory(currentDirectory);
+                rl.prompt();
+                break;
             case '.exit':
                 rl.close();
                 break;
