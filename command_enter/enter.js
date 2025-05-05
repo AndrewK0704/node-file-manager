@@ -1,5 +1,6 @@
 import path from 'path';
 import readline from 'readline';
+import os from 'os';
 import { stdin as input, stdout as output } from 'process';
 import { messageDirectory } from '../general/messageDirectory.js';
 import { name, startDirectory } from '../general/start.js';
@@ -16,6 +17,7 @@ import { rm } from '../command_files/rm.js';
 import { hash } from '../command_hash/hash.js';
 import { compress } from '../command_compress_decompress/compress.js';
 import { decompress } from '../command_compress_decompress/decompress.js';
+import { cpus } from '../command_os/cpus.js';
 
 
 let currentDirectory = startDirectory();
@@ -91,8 +93,40 @@ export const enter = () => {
                 messageDirectory(currentDirectory);
                 rl.prompt();
                 break;
-            // case 'os':
-            //   break;
+            case 'os':{
+                switch(input.trim().split(' ')[1]){
+                    case '--EOL':
+                        console.log(JSON.stringify(os.EOL));
+                        messageDirectory(currentDirectory);
+                        rl.prompt();
+                        break;
+                    case '--cpus':
+                        await cpus();
+                        messageDirectory(currentDirectory);
+                        rl.prompt();
+                        break;
+                    case '--homedir':
+                        console.log(os.homedir());
+                        messageDirectory(currentDirectory);
+                        rl.prompt();
+                        break;
+                    case '--username':
+                        console.log(os.userInfo().username);
+                        messageDirectory(currentDirectory);
+                        rl.prompt();
+                        break;
+                    case '--architecture':
+                        console.log(os.arch());
+                        messageDirectory(currentDirectory);
+                        rl.prompt();
+                        break;
+                    default:
+                        console.log('Invalid input');
+                        messageDirectory(currentDirectory);
+                        rl.prompt();}
+                break;
+            }
+
             case 'hash':
                 await hash(currentDirectory, input);
                 //rl.prompt();
